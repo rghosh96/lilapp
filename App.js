@@ -1,7 +1,6 @@
 import React from 'react';
 import Fonts from './Fonts'
 import Home from './Home'
-import colors from './colorthemes/warmtheme.js';
 import 'react-native-gesture-handler';
 import mockdata from './mockdata';
 import Todolist from './components/ToDoList'

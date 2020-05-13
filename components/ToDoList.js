@@ -1,5 +1,4 @@
 import React from 'react'
-import colors from '../colorthemes/warmtheme'
 import {StyleSheet, Text, View} from 'react-native'
 import { connect } from 'react-redux';
 import styled, { ThemeProvider } from 'styled-components/native';

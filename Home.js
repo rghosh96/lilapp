@@ -1,10 +1,10 @@
 import React from 'react';
-import colors from './colorthemes/warmtheme.js';
 import 'react-native-gesture-handler';
 import mockdata from './mockdata';
 import Todolist from './components/ToDoList'
+import AddTodo from './components/AddToDo'
 import { createStackNavigator } from '@react-navigation/stack';
-import { AppRegistry, Button, Picker, ButtonText, StyleSheet, Text, View, ScrollView, TouchableHighlight, TouchableWithoutFeedback } from 'react-native';
+import { AppRegistry, Button, Picker, ButtonText, StyleSheet, Text, View, ScrollView, TouchableHighlight, Modal, TouchableWithoutFeedback } from 'react-native';
 import { TouchableOpacity, FlatList } from 'react-native-gesture-handler';
 import { FontAwesome } from '@expo/vector-icons'; 
 import { themePicker } from './reduxStore/actions';
@@ -16,6 +16,13 @@ import { warmTheme, roseTheme } from './colorthemes'
 const Stack = createStackNavigator();
 
 class Home extends React.Component {
+  state = {
+    addTodoVisible: false
+  }
+
+  toggleAddTodoModal() {
+    this.setState({ addTodoVisible: !this.state.addTodoVisible })
+  }
   render() {
     console.log(this.props)
     return (
@@ -27,6 +34,12 @@ class Home extends React.Component {
             <LeButtText>toggle theme</LeButtText>
         </LeButton>}
        
+        <Modal animationType="slide" 
+          visible={this.state.addTodoVisible}
+          onRequestClose={() => this.toggleAddTodoModal()}>
+          <AddTodo closeModal={() => this.toggleAddTodoModal()}/>
+        </Modal>
+
         <Content>
         <View style={ {flexDirection: 'row', marginBottom: 15} }>
           <Divider></Divider>
@@ -35,7 +48,7 @@ class Home extends React.Component {
         </View>
 
         <View style={ {flexDirection: 'row', margineVertical: 41} }>
-          <TouchableOpacity style={styles.addList}>
+          <TouchableOpacity onPress={() => this.toggleAddTodoModal()}>
           <FontAwesome name="pencil-square-o" size={51} color={this.props.theme.accent} />
           </TouchableOpacity>
           <Accent>add list</Accent>
@@ -57,20 +70,6 @@ class Home extends React.Component {
   }
 }
 
-const styles = StyleSheet.create({
-  title: {
-    fontSize: 30,
-    color: colors.title,
-    margin: 10,
-    fontFamily: Platform.OS === "ios" ? 'Avenir-Heavy' : 'monospace',
-    paddingHorizontal: 31,
-    fontWeight: '900',
-  },
-  addList: {
-    alignItems: 'center',
-    justifyContent: 'center',
-  }
-});
 
 function mapStateToProps(state) {
   console.log(state)
@@ -82,7 +81,9 @@ function mapStateToProps(state) {
 export default connect(mapStateToProps, {themePicker})(Home)
 
 const LeButton = styled.TouchableOpacity`
-  align-self: flex-end;
+  position: absolute;
+  top: 64px;
+  right: 32px;
   border-radius: 9px;
   background-color: ${props => props.theme.accent1};
   padding: 9px;
@@ -99,11 +100,10 @@ const Container = styled.SafeAreaView`
   flex:1;
   background-color: ${props => props.theme.bg};
   align-items: center;
-  justify-content: flex-start;
+  justify-content: center;
 `
 const Content = styled.SafeAreaView `
   background-color: ${props => props.theme.bg};
-  margin-top: 90px;
   align-items: center;
   justify-content: center;
 `
