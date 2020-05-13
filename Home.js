@@ -17,27 +17,22 @@ const Stack = createStackNavigator();
 
 class Home extends React.Component {
   render() {
-    let themeChoice = [{
-      value: 'warmTheme', },
-      { value: 'roseTheme',
-    }]
     console.log(this.props)
     return (
       <ThemeProvider theme={this.props.theme}>
       <Container>
+        { this.props.theme.mode === "warm" ?  <LeButton title="change theme!" onPress={() => this.props.themePicker(roseTheme)}>
+            <LeButtText>toggle theme</LeButtText>
+        </LeButton> : <LeButton title="change theme!" onPress={() => this.props.themePicker(warmTheme)}>
+            <LeButtText>toggle theme</LeButtText>
+        </LeButton>}
+       
+        <Content>
         <View style={ {flexDirection: 'row', marginBottom: 15} }>
-          <Divider/>
+          <Divider></Divider>
           <Title>T O D O<Text style={ {color: this.props.theme.accent1, fontWeight: '500'} }> L I S T</Text></Title>
-          <View style={styles.dividor}/>
+          <Divider></Divider>   
         </View>
-
-        <View style= { {width: 400} }>
-          <Dropdown onChangeText={(value) => this.props.themePicker(value)} label='choose theme' data={themeChoice}/>
-        </View>
-
-        <Button title="change theme!" onPress={() => this.props.themePicker(roseTheme)}>
-          <ButtonText>change theme!!!</ButtonText>
-        </Button>
 
         <View style={ {flexDirection: 'row', margineVertical: 41} }>
           <TouchableOpacity style={styles.addList}>
@@ -55,6 +50,7 @@ class Home extends React.Component {
             renderItem={({ item }) => <Todolist list= {item} />}
           />
         </View>
+        </Content>
       </Container>
       </ThemeProvider>
     );
@@ -85,13 +81,33 @@ function mapStateToProps(state) {
 
 export default connect(mapStateToProps, {themePicker})(Home)
 
+const LeButton = styled.TouchableOpacity`
+  align-self: flex-end;
+  border-radius: 9px;
+  background-color: ${props => props.theme.accent1};
+  padding: 9px;
+  margin: 10px;
+`
+
+const LeButtText = styled.Text`
+  font-size: 9px;
+  color: ${props => props.theme.title};
+  font-family: ${Platform.OS === "ios" ? 'Avenir-Heavy' : 'monospace'};
+`
+
 const Container = styled.SafeAreaView`
   flex:1;
-  padding-top: 60px;
   background-color: ${props => props.theme.bg};
+  align-items: center;
+  justify-content: flex-start;
+`
+const Content = styled.SafeAreaView `
+  background-color: ${props => props.theme.bg};
+  margin-top: 90px;
   align-items: center;
   justify-content: center;
 `
+
 const Divider = styled.SafeAreaView`
   background-color: ${props => props.theme.darkest};
   height: .5px;
@@ -99,6 +115,7 @@ const Divider = styled.SafeAreaView`
   align-self: center;
 `
 const Title = styled.Text`
+  text-align: center;
   font-size: 30px;
   color: ${props => props.theme.title};
   margin: 10px;
