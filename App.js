@@ -1,19 +1,27 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import Fonts from './Fonts'
+import Home from './Home'
+import colors from './colorthemes/warmtheme.js';
+import 'react-native-gesture-handler';
+import mockdata from './mockdata';
+import Todolist from './components/ToDoList'
+import { NavigationContainer } from '@react-navigation/native';
+import { AppRegistry, StyleSheet, Text, View, ScrollView, TouchableHighlight, TouchableWithoutFeedback } from 'react-native';
+import thunk from 'redux-thunk';
+import { Provider } from 'react-redux';
+import { createStore, applyMiddleware, combineReducers } from 'redux';
+import themeReducer from './reduxStore/themeReducer'
 
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-    </View>
-  );
+const myStore = createStore(combineReducers({themeReducer}), applyMiddleware(thunk))
+
+export default class App extends React.Component {
+  render() {
+    return (
+      <Provider store= { myStore }>
+        <Home />
+      </Provider>
+    );
+  }
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+
