@@ -7,17 +7,25 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { AppRegistry, Button, Picker, ButtonText, StyleSheet, Text, View, ScrollView, TouchableHighlight, Modal, TouchableWithoutFeedback } from 'react-native';
 import { TouchableOpacity, FlatList } from 'react-native-gesture-handler';
 import { FontAwesome } from '@expo/vector-icons'; 
-import { themePicker } from './reduxStore/actions';
+import { themePicker, watchBlrp } from './reduxStore/actions';
 import { connect } from 'react-redux';
 import styled, { ThemeProvider } from 'styled-components/native';
 import { Dropdown } from 'react-native-material-dropdown';
 import { warmTheme, roseTheme } from './colorthemes'
+import db from './config'
+import * as firebase from 'firebase';
 
 const Stack = createStackNavigator();
 
 class Home extends React.Component {
-  state = {
-    addTodoVisible: false
+  constructor(props) {
+    super(props);
+    console.log("IN CONSTRUCTOR")
+    console.log(this.props)
+    
+    this.state = {
+      addTodoVisible: false
+    }
   }
 
   toggleAddTodoModal() {
@@ -41,6 +49,7 @@ class Home extends React.Component {
         </Modal>
 
         <Content>
+        <Title>{this.props.brlp}</Title>
         <View style={ {flexDirection: 'row', marginBottom: 15} }>
           <Divider></Divider>
           <Title>T O D O<Text style={ {color: this.props.theme.accent1, fontWeight: '500'} }> L I S T</Text></Title>
@@ -72,16 +81,16 @@ class Home extends React.Component {
 
 
 const mapStateToProps = (state) => {
-  console.log("IN HOME MAP STATE TO PROPS")
+  console.log("IN HOME MAP STATE TO")
   console.log(state)
   return {
-    theme: state.themeReducer.currentTheme
+    theme: state.reducer.currentTheme,
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    themePicker: (theme) => {dispatch(themePicker(theme))}
+    themePicker: (theme) => {dispatch(themePicker(theme))},
   }
 }
 

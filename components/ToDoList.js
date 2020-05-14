@@ -2,7 +2,7 @@ import React from 'react'
 import {StyleSheet, Text, View} from 'react-native'
 import { connect } from 'react-redux';
 import styled, { ThemeProvider } from 'styled-components/native';
-import { themePicker } from '../reduxStore/themeReducer'
+import { themePicker } from '../reduxStore/actions'
 
 ToDoList = ({list, theme}) => {
     console.log("PROPS IN TODO: ")
@@ -35,7 +35,7 @@ ToDoList = ({list, theme}) => {
 function mapStateToProps(state) {
     console.log(state)
     return {
-        theme: state.themeReducer.currentTheme
+        theme: state.reducer.currentTheme
     }
 }
 

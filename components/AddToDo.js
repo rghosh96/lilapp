@@ -28,7 +28,7 @@ class AddToDo extends React.Component {
  function mapStateToProps(state) {
     console.log(state)
     return {
-        theme: state.themeReducer.currentTheme
+        theme: state.reducer.currentTheme
     }
 }
 

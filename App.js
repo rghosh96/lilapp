@@ -9,20 +9,14 @@ import { AppRegistry, StyleSheet, Text, View, ScrollView, TouchableHighlight, To
 import thunk from 'redux-thunk';
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware, combineReducers } from 'redux';
-import themeReducer from './reduxStore/themeReducer'
-import APIKeys from './APIkeys';
+import {reducer} from './reduxStore/reducers'
+import config from './config';
 import * as firebase from 'firebase';
 
-const myStore = createStore(combineReducers({themeReducer}), applyMiddleware(thunk))
+const myStore = createStore(combineReducers({reducer}), applyMiddleware(thunk))
 
 export default class App extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      isLoadingComplete: false,
-    }
-    if (!firebase.apps.length) {firebase.initializeApp(APIKeys.FirebaseConfig);}
-  }
+
 
   render() {
     return (
