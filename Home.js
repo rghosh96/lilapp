@@ -71,14 +71,21 @@ class Home extends React.Component {
 }
 
 
-function mapStateToProps(state) {
+const mapStateToProps = (state) => {
+  console.log("IN HOME MAP STATE TO PROPS")
   console.log(state)
   return {
     theme: state.themeReducer.currentTheme
   }
 }
 
-export default connect(mapStateToProps, {themePicker})(Home)
+const mapDispatchToProps = (dispatch) => {
+  return {
+    themePicker: (theme) => {dispatch(themePicker(theme))}
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Home)
 
 const LeButton = styled.TouchableOpacity`
   position: absolute;

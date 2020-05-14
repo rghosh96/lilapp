@@ -39,7 +39,7 @@ function mapStateToProps(state) {
     }
 }
 
-export default connect(mapStateToProps, {themePicker})(ToDoList)
+export default connect(mapStateToProps, null)(ToDoList)
 
 const styles = StyleSheet.create ({
     listContainer: {
