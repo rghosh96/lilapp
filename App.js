@@ -10,10 +10,20 @@ import thunk from 'redux-thunk';
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware, combineReducers } from 'redux';
 import themeReducer from './reduxStore/themeReducer'
+import APIKeys from './APIkeys';
+import * as firebase from 'firebase';
 
 const myStore = createStore(combineReducers({themeReducer}), applyMiddleware(thunk))
 
 export default class App extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      isLoadingComplete: false,
+    }
+    if (!firebase.apps.length) {firebase.initializeApp(APIKeys.FirebaseConfig);}
+  }
+
   render() {
     return (
       <Provider store= { myStore }>
