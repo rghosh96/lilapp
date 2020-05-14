@@ -48,10 +48,10 @@ class Home extends React.Component {
         </View>
 
         <View style={ {flexDirection: 'row', margineVertical: 41} }>
-          <TouchableOpacity onPress={() => this.toggleAddTodoModal()}>
-          <FontAwesome name="pencil-square-o" size={51} color={this.props.theme.accent} />
+          <TouchableOpacity style={ {flexDirection: 'row'} }onPress={() => this.toggleAddTodoModal()}>
+            <FontAwesome name="pencil-square-o" size={51} color={this.props.theme.accent} />
+            <Accent>add list</Accent>
           </TouchableOpacity>
-          <Accent>add list</Accent>
         </View>
 
         <View style={ {height: 325, paddingLeft: 21, paddingRight: 21} }>
